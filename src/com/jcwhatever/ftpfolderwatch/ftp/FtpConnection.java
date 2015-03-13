@@ -97,7 +97,13 @@ public class FtpConnection implements IFtpConnection {
             return _client;
         }
 
-        _expires = System.currentTimeMillis() + (10 * 1000);
+        if (_client != null) {
+            try {
+                _client.disconnect();
+            } catch (IOException ignore) {}
+        }
+
+        _expires = System.currentTimeMillis() + (30 * 1000);
 
         FTPClient ftp = new FTPClient();
         FTPClientConfig config = new FTPClientConfig();
